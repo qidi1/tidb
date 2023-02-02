@@ -31,6 +31,7 @@ import (
 	"github.com/pingcap/failpoint"
 	"github.com/pingcap/kvproto/pkg/kvrpcpb"
 	tikverr "github.com/pingcap/tidb/store/tikv/error"
+	"github.com/pingcap/tidb/store/tikv/kv"
 	tikv "github.com/pingcap/tidb/store/tikv/kv"
 	"github.com/pingcap/tidb/store/tikv/logutil"
 	"github.com/pingcap/tidb/store/tikv/metrics"
@@ -111,6 +112,7 @@ type KVTxn struct {
 	scope              string
 	kvFilter           KVFilter
 	resourceGroupTag   []byte
+	keyRanges          []tikv.KeyRange
 }
 
 // ExtractStartTS use `option` to get the proper startTS for a transaction.
@@ -214,6 +216,10 @@ func (txn *KVTxn) SetSchemaLeaseChecker(checker SchemaLeaseChecker) {
 // EnableForceSyncLog indicates tikv to always sync log for the transaction.
 func (txn *KVTxn) EnableForceSyncLog() {
 	txn.syncLog = true
+}
+
+func (txn *KVTxn) AddRequestRange(startKey, endKey []byte) {
+	txn.keyRanges = append(txn.keyRanges, kv.KeyRange{startKey, endKey})
 }
 
 // SetPessimistic indicates if the transaction should use pessimictic lock.

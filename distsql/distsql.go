@@ -67,6 +67,10 @@ func Select(ctx context.Context, sctx sessionctx.Context, kvReq *kv.Request, fie
 		defer span1.Finish()
 		ctx = opentracing.ContextWithSpan(ctx, span1)
 	}
+	txn, _ := sctx.Txn(true)
+	for _, r := range kvReq.KeyRanges {
+		txn.AddRequestRange(r.StartKey, r.EndKey)
+	}
 
 	// For testing purpose.
 	if hook := ctx.Value("CheckSelectRequestHook"); hook != nil {

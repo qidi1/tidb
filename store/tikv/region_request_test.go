@@ -502,6 +502,10 @@ func (s *mockTikvGrpcServer) GetLockWaitInfo(context.Context, *kvrpcpb.GetLockWa
 	return nil, errors.New("unreachable")
 }
 
+func (s *mockTikvGrpcServer) VertifyReadSet(context.Context, *kvrpcpb.VertifyReadSetRequest) (*kvrpcpb.VertifyReadSetResponse, error) {
+	return nil, errors.New("unreachable")
+}
+
 func (s *testRegionRequestToSingleStoreSuite) TestNoReloadRegionForGrpcWhenCtxCanceled(c *C) {
 	// prepare a mock tikv grpc server
 	addr := "localhost:56341"

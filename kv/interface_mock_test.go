@@ -136,6 +136,10 @@ func (t *mockTxn) GetTableInfo(id int64) *model.TableInfo {
 	return nil
 }
 
+func (t *mockTxn) AddRequestRange(startKey, endKey []byte) {
+
+}
+
 // newMockTxn new a mockTxn.
 func newMockTxn() Transaction {
 	return &mockTxn{

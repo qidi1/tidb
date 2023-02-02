@@ -187,6 +187,7 @@ type Transaction interface {
 	// GetIndexName returns the cached index name.
 	// If there is no such index already inserted through CacheIndexName, it will return UNKNOWN.
 	GetTableInfo(id int64) *model.TableInfo
+	AddRequestRange(startKey, endKey []byte)
 }
 
 // Client is used to send request to KV layer.

@@ -372,6 +372,10 @@ func (svr *Server) RawGetKeyTTL(ctx context.Context, req *kvrpcpb.RawGetKeyTTLRe
 	return &kvrpcpb.RawGetKeyTTLResponse{}, nil
 }
 
+func (svr *Server) VertifyReadSet(context.Context, *kvrpcpb.VertifyReadSetRequest) (*kvrpcpb.VertifyReadSetResponse, error) {
+	return &kvrpcpb.VertifyReadSetResponse{}, nil
+}
+
 // KvImport implements implements the tikvpb.TikvServer interface.
 func (svr *Server) KvImport(context.Context, *kvrpcpb.ImportRequest) (*kvrpcpb.ImportResponse, error) {
 	// TODO
